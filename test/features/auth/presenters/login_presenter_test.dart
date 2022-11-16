@@ -9,6 +9,7 @@ void main() {
   late LoginPresentationModel model;
   late LoginPresenter presenter;
   late MockLoginNavigator navigator;
+  late MockLogInUseCase useCase;
 
   test(
     'sample test',
@@ -18,11 +19,13 @@ void main() {
   );
 
   setUp(() {
-    model = LoginPresentationModel.initial(const LoginInitialParams());
+    model = LoginPresentationModel.initial(LoginInitialParams());
     navigator = MockLoginNavigator();
+    useCase = MockLogInUseCase();
     presenter = LoginPresenter(
       model,
       navigator,
+      useCase,
     );
   });
 }

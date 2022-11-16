@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> with PresenterStateMixin<LoginVie
                 decoration: InputDecoration(
                   hintText: appLocalizations.usernameHint,
                 ),
-                onChanged: (text) => doNothing(), //TODO
+                onChanged: (username) => presenter.handleUsernameChange(user: username), //TODO
               ),
               const SizedBox(height: 8),
               TextField(
@@ -40,12 +40,18 @@ class _LoginPageState extends State<LoginPage> with PresenterStateMixin<LoginVie
                 decoration: InputDecoration(
                   hintText: appLocalizations.passwordHint,
                 ),
-                onChanged: (text) => doNothing(), //TODO
+                onChanged: (password) => presenter.handlePasswordChange(password: password), //TODO
               ),
               const SizedBox(height: 16),
               stateObserver(
-                builder: (context, state) => ElevatedButton(
-                  onPressed: () => doNothing(), //TODO
+                builder: (context, state) => state.isLoading
+                    ? const CircularProgressIndicator()
+                    : ElevatedButton(
+                  onPressed: state.isLoginEnabled
+                      ? () {
+                    presenter.login();
+                  }
+                      : doNothing(),
                   child: Text(appLocalizations.logInAction),
                 ),
               ),
